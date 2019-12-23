@@ -114,7 +114,17 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestWeather(mWeatherId);
+//                如果是没有切换城市的时候刷新的话，就是我的第一个传进来的id进行刷新
+//                如果是我切换了城市，再刷新的话，就是应该我使用新的id去刷新
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
+                String new_id = preferences.getString("new_id", null);
+                if(new_id != null){
+                    requestWeather(new_id);
+                    Log.d(TAG, "onRefresh: " + new_id);
+                }else{
+                    requestWeather(mWeatherId);
+                    Log.d(TAG, "onRefresh: " + mWeatherId);
+                }
             }
         });
 

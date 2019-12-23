@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -96,6 +98,9 @@ public class ChooseAreaFragment extends Fragment {
                         activity.drawerLayout.closeDrawers();
                         activity.swipeRefreshLayout.setRefreshing(true);
                         activity.requestWeather(weatherId);
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+                        editor.putString("new_id", weatherId);
+                        editor.apply();
                     }
                 }
             }
